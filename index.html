@@ -1,0 +1,595 @@
+<!--
+ * @Author: 刑天
+ * @Date: 2022-01-07 11:25:35
+ * @LastEditTime: 2022-01-11 17:19:20
+ * @Description: 战神
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+
+        }
+
+        body {
+            position: relative;
+            background-color: #000;
+        }
+
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+            padding: 40px;
+            box-sizing: border-box;
+        }
+
+        .animation {
+            -webkit-animation: flash 1s .2s ease both;
+            -moz-animation: flash 1s .2s ease both;
+        }
+
+        @-webkit-keyframes flash {
+
+            0%,
+            50%,
+            100% {
+                opacity: 1;
+            }
+
+            25%,
+            75% {
+                opacity: 0;
+            }
+        }
+
+        @-moz-keyframes flash {
+
+            0%,
+            50%,
+            100% {
+                opacity: 1;
+            }
+
+            25%,
+            75% {
+                opacity: 0;
+            }
+        }
+
+        .moon {
+            position: fixed;
+            top: 70px;
+            right: 100px;
+        }
+
+        #upload {
+            display: none;
+        }
+
+        #button {
+            position: fixed;
+            width: 140px;
+            height: 42px;
+            line-height: 42px;
+            text-align: center;
+            font-size: 16px;
+            top: 50%;
+            left: 50%;
+            margin-top: -21px;
+            margin-left: -70px;
+            font-weight: 400;
+            cursor: pointer;
+        }
+
+        .name-block {
+            width: 100px;
+            height: 70px;
+            line-height: 70px;
+            text-align: center;
+            background: #fff;
+            border-radius: 6px;
+        }
+
+        .name_animation {
+            -webkit-animation: flip 1s 0s ease both;
+            -moz-animation: flip 1s 0s ease both;
+        }
+
+        @-webkit-keyframes flip {
+            0% {
+                -webkit-transform: perspective(400px) rotateY(0);
+                -webkit-animation-timing-function: ease-out
+            }
+
+            100% {
+                -webkit-transform: perspective(400px) rotateY(360deg) scale(1);
+                -webkit-animation-timing-function: ease-in
+            }
+        }
+
+        @-moz-keyframes flip {
+            0% {
+                -moz-transform: perspective(400px) rotateY(0);
+                -moz-animation-timing-function: ease-out
+            }
+
+            100% {
+                -moz-transform: perspective(400px) rotateY(360deg) scale(1);
+                -moz-animation-timing-function: ease-in
+            }
+        }
+
+        #box {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0 10px;
+        }
+
+        .time {
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            background: #fff;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            margin-left: -150px;
+            margin-top: -150px;
+            z-index: 10;
+            padding: 50px;
+            box-sizing: border-box;
+            display: none;
+        }
+
+        .time::before {
+            content: "";
+            width: 100%;
+            height: 100%;
+            background: #000;
+            opacity: 0.3;
+            position: fixed;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            z-index: 9;
+        }
+
+        .time div {
+            background: #fff;
+            position: relative;
+            z-index: 10;
+            width: 100%;
+            height: 100%;
+            /* line-height: 1; */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 120px;
+            border-radius: 50%;
+            font-weight: 700;
+            -webkit-animation: bounceIn 1s 0s ease both;
+            -moz-animation: bounceIn 1s 0s ease both;
+        }
+
+        @-webkit-keyframes bounceIn {
+            0% {
+                opacity: 0;
+                -webkit-transform: scale(.3)
+            }
+
+            50% {
+                opacity: 1;
+                -webkit-transform: scale(1.05)
+            }
+
+            70% {
+                -webkit-transform: scale(.9)
+            }
+
+            100% {
+                -webkit-transform: scale(1)
+            }
+        }
+
+        @-moz-keyframes bounceIn {
+            0% {
+                opacity: 0;
+                -moz-transform: scale(.3)
+            }
+
+            50% {
+                opacity: 1;
+                -moz-transform: scale(1.05)
+            }
+
+            70% {
+                -moz-transform: scale(.9)
+            }
+
+            100% {
+                -moz-transform: scale(1)
+            }
+        }
+
+        .no_win {
+            -webkit-animation: bounceOut 2s .5s ease both;
+            -moz-animation: bounceOut 2s .5s ease both;
+        }
+
+        @-webkit-keyframes bounceOut {
+            0% {
+                -webkit-transform: scale(1)
+            }
+
+            25% {
+                -webkit-transform: scale(.95)
+            }
+
+            50% {
+                opacity: 1;
+                -webkit-transform: scale(1.1)
+            }
+
+            100% {
+                opacity: 0;
+                -webkit-transform: scale(.3)
+            }
+        }
+
+        @-moz-keyframes bounceOut {
+            0% {
+                -moz-transform: scale(1)
+            }
+
+            25% {
+                -moz-transform: scale(.95)
+            }
+
+            50% {
+                opacity: 1;
+                -moz-transform: scale(1.1)
+            }
+
+            100% {
+                opacity: 0;
+                -moz-transform: scale(.3)
+            }
+        }
+
+        #down {
+            margin-top: 10px;
+            background-color: #fff;
+            color: #000;
+            padding: 3px;
+            border: none;
+            border-radius: 3px;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        #winner_box {
+            position: fixed;
+            top: 200px;
+            left: 50%;
+            width: 400px;
+            margin-left: -200px;
+            background-color: #cecedd;
+            padding: 15px;
+            z-index: 13;
+            color: #000;
+            border-radius: 4px;
+            -webkit-animation: bounceInDown 1s .2s ease both;
+            -moz-animation: bounceInDown 1s .2s ease both;
+        }
+
+        @-webkit-keyframes bounceInDown {
+            0% {
+                opacity: 0;
+                -webkit-transform: translateY(-2000px)
+            }
+
+            60% {
+                opacity: 1;
+                -webkit-transform: translateY(30px)
+            }
+
+            80% {
+                -webkit-transform: translateY(-10px)
+            }
+
+            100% {
+                -webkit-transform: translateY(0)
+            }
+        }
+
+        @-moz-keyframes bounceInDown {
+            0% {
+                opacity: 0;
+                -moz-transform: translateY(-2000px)
+            }
+
+            60% {
+                opacity: 1;
+                -moz-transform: translateY(30px)
+            }
+
+            80% {
+                -moz-transform: translateY(-10px)
+            }
+
+            100% {
+                -moz-transform: translateY(0)
+            }
+        }
+
+        .win {
+            display: flex;
+            gap: 0 10px;
+            font-size: 16px;
+            padding: 5px 0 5px 43px;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- <img class="moon" src="./moon.png" alt="./moon.png"> -->
+    <button id="button">导入名单</button>
+    <div id="box"></div>
+    <input id="upload" type="file" accept=".xlsx,.xls">
+    <div class="time">
+        <div>10</div>
+    </div>
+
+    <script src="./xlsx.full.min.js"></script>
+    <script>
+
+        class Persons {
+            constructor(ele, data, initShowNum, initPersonWidth = 100, initPersonHeight = 40) {
+                this.ele = ele;
+                this.initPersonWidth = initPersonWidth; //默认每个名字长度是 100px
+                this.initPersonHeight = initPersonHeight; //默认每个名字高度是 100px
+                //地图共多少行
+                this.rows = Math.ceil(Persons.getStyle(ele, 'height') / this.initPersonHeight)
+                //地图共多少列
+                this.cells = Math.ceil(Persons.getStyle(ele, 'width') / this.initPersonWidth)
+                this.data = data;
+                this.showData = [];
+                this.winners = [];
+                this.status = false;
+                this.initShowNum = initShowNum;
+                this.width = Persons.getStyle(ele, 'width')
+                this.height = Persons.getStyle(ele, 'height')
+                this.init()
+            }
+            //获取盒子的宽和高
+            static getStyle(el, attr) {
+                return parseFloat(getComputedStyle(el)[attr])
+            }
+            //获取需要的数据
+            getData(list, count) {
+                let shuffled = list.slice(0), i = list.length, min = i - count, temp, index;
+                while (i-- > min) {
+                    index = Math.floor((i + 1) * Math.random());
+                    temp = shuffled[index];
+                    shuffled[index] = shuffled[i];
+                    shuffled[i] = temp;
+                }
+                return shuffled.slice(min);
+            }
+
+            isSame(x, y, initD) {
+                const status = this.showData.find(item => (item && item.x && item.y && Math.abs(x - item.x) < 70 && Math.abs(y - item.y) < 20))
+                return status
+            }
+
+            createP(d, i) {
+                let x = Math.floor(Math.random() * this.width)
+                let y = Math.floor(Math.random() * this.height)
+                x = this.width - x < 100 ? x - 100 : x;
+                y = this.height - y < 100 ? y - 100 : y;
+                if (this.isSame(x, y)) {
+                    this.createP(d);
+                } else {
+                    this.showData = this.showData.concat({ ...d, x, y })
+                }
+            }
+            createNode() {
+
+            }
+
+            init() {
+                this.showData.length = 0;
+                const initD = this.getData(this.data, this.initShowNum);
+                for (let i = 0; i < initD.length; i++) {
+                    this.createP(initD[i], i)
+                }
+            }
+
+            render() {
+
+                //随机定位
+                // this.ele.innerHTML = this.showData.map((item => {
+                //     return `<span style="position: fixed; top: ${item.y}px; left: ${item.x}px; color: #fff" class="name${item.id}">${item.name}</span>`
+                // })).join('')
+
+
+                //按顺序排列
+                this.ele.innerHTML = this.showData.map((item => {
+                    return `<div style="" class="name${item.id} name-block ${this.status ? 'name_animation' : ''} ${this.winners.length > 0 ? 'no_win' : ''}">${item.name}</div>`
+                })).join('')
+
+                //随机定位小星星
+                // this.ele.innerHTML= this.showData.map((item => {
+                //     const width = Math.random() * 20
+                //     return `<img src="./stars.png" style="position: fixed; top: ${item.y}px; left: ${item.x}px; width: ${width}px; height:  ${width}px;" class="name${item.id} animation"/>`
+                // })).join('')
+
+            }
+        }
+
+        class Play {
+            constructor(ele, person, initShowNum, countdownNode, countdownNodeNum) {
+                this.person = new Persons(ele, person, initShowNum)
+                this.person.render();
+                this.countdownNode = countdownNode;
+                this.countdownNodeNum = countdownNodeNum;
+                this.timer = null;
+
+                this.countdown = 10;
+                this.countdownNode.style.display = "block"
+                this.control();
+            }
+            start() {
+
+                this.person.status = true;
+                this.timer = setInterval(() => {
+                    this.person.init()
+                    this.person.render()
+                    this.countdown--
+                    this.countdownNodeNum.innerHTML = this.countdown;
+                    if (this.countdown < 0) {
+                        this.stop();
+                        this.countdownNode.style.display = "none"
+                        const w = this.person.getData(this.person.showData, 10)
+                        this.person.winners = w
+                        this.person.render();
+                        console.log(11, this.person.winners, w)
+                        const one = w.slice(0, 1).map(item => {
+                            return `<div class="w1 win"><span>${item.name}</span><span>${item.phone}</span></div>`
+                        }).join('');//一等奖
+                        const two = w.slice(1, 3).map(item => {
+                            return `<div class="w2 win"><span>${item.name}</span><span>${item.phone}</span></div>`
+                        }).join('');//二等奖
+                        const three = w.slice(3, w.length).map(item => {
+                            return `<div class="w3 win"><span>${item.name}</span><span>${item.phone}</span></div>`
+                        }).join('');//三等奖
+                        const win_node = `<div id="winner_box">
+                            <div class="w_wrap">
+                                <div class="w_label">一等奖</div>
+                                ${one}
+                            </div>
+                            <div class="w_wrap">
+                                <div class="w_label">二等奖</div>
+                                ${two}
+                            </div>
+                            <div class="w_wrap">
+                                <div class="w_label">三等奖</div>
+                                ${three}
+                            </div>
+                            <button id="down">下载名单</button>
+                        </div>`
+                        setTimeout(() => {
+                            document.querySelector('body').insertAdjacentHTML('beforeEnd', win_node)
+                        }, 2000)
+                    }
+
+                }, 2000)
+            }
+            stop() {
+                this.person.status = false;
+                clearInterval(this.timer);
+            }
+            control() {
+                const that = this;
+                window.addEventListener('keydown', function ({ keyCode }) {
+                    switch (keyCode) {
+                        case 32:
+                            if (that.person.status) {
+                                that.stop()
+                            } else {
+                                that.start();
+                            }
+                    }
+                })
+            }
+        }
+        let play = null;
+        document.querySelector("#upload").onchange = (e) => {
+            play = null;
+            const fileList = e.target.files;
+            let file = fileList[0];
+            workbookFromLocalFile(file, e, function (data) {
+                document.querySelector("#button").style.display = "none";
+                const node = document.querySelector('#box');
+                const countdownNode = document.querySelector(".time")
+                const countdownNodeNum = document.querySelector(".time div")
+                play = new Play(node, data, 100, countdownNode, countdownNodeNum)
+                // setTimeout(()=>{
+                //     play.start();
+                // }, 500);
+                // doit(data)
+            });
+        }
+        document.querySelector("body").addEventListener('click', function (e) {
+            if (e.target.id === 'down') {
+                // console.log(1111, play.person.winners);
+                doit(play.person.winners)
+            } else if (e.target.id === 'button') {
+                document.querySelector("#upload").click();
+            }
+        })
+        // .onclick = function () {
+        //     console.table(play.person.winners);
+        //     
+        // }
+        function doit(data) {
+            const newData = data.map(item=>({name: item.name, phone: item.phone}))
+            /* 创建worksheet */
+            var ws = XLSX.utils.json_to_sheet(newData);
+
+            /* 新建空workbook，然后加入worksheet */
+            var wb = XLSX.utils.book_new();
+            XLSX.utils.book_append_sheet(wb, ws, "People");
+
+            /* 生成xlsx文件 */
+            XLSX.writeFile(wb, "中奖人名单.xlsx");
+        }
+
+        function workbookFromLocalFile(file, e, callback) {
+            var reader = new FileReader();
+            reader.readAsBinaryString(file);
+            let data = [];
+            reader.onload = function (event) {
+                try {
+                    const { result } = event.target;
+                    const workbook = XLSX.read(result, { type: 'binary' });
+                    for (const sheet in workbook.Sheets) {
+                        // eslint-disable-next-line no-prototype-builtins
+                        if (workbook.Sheets.hasOwnProperty(sheet)) {
+                            // 利用 sheet_to_json 方法将 excel 转成 json 数据
+                            data = data.concat(
+                                XLSX.utils.sheet_to_json(workbook.Sheets[sheet], {
+                                    defval: null,
+                                }),
+                            );
+                            // break;
+                            // 如果只取第一张表，就取消注释这行
+                        }
+                    }
+                    callback && callback(data)
+                    // 清空文件, 否则选取相同的文件不会触发 onChange 函数
+                    e.target.value = null;
+                    // eslint-disable-next-line no-catch-shadow
+                } catch (error) {
+                    console.log('类型错误');
+                    console.log(error);
+                    return;
+                }
+            };
+        }
+    </script>
+</body>
+
+</html>
