@@ -1,7 +1,7 @@
 <!--
  * @Author: 刑天
  * @Date: 2022-01-07 11:25:35
- * @LastEditTime: 2022-01-11 17:19:20
+ * @LastEditTime: 2022-01-12 11:19:03
  * @Description: 战神
 -->
 <!DOCTYPE html>
@@ -440,13 +440,13 @@
         }
 
         class Play {
-            constructor(ele, person, initShowNum, countdownNode, countdownNodeNum) {
+            constructor(ele, person, initShowNum, countdownNode, countdownNodeNum, countdown, winnerNum) {
                 this.person = new Persons(ele, person, initShowNum)
                 this.person.render();
                 this.countdownNode = countdownNode;
                 this.countdownNodeNum = countdownNodeNum;
                 this.timer = null;
-
+                this.winnerNum = winnerNum;
                 this.countdown = 10;
                 this.countdownNode.style.display = "block"
                 this.control();
@@ -462,7 +462,7 @@
                     if (this.countdown < 0) {
                         this.stop();
                         this.countdownNode.style.display = "none"
-                        const w = this.person.getData(this.person.showData, 10)
+                        const w = this.person.getData(this.person.showData, this.winnerNum)
                         this.person.winners = w
                         this.person.render();
                         console.log(11, this.person.winners, w)
@@ -525,7 +525,7 @@
                 const node = document.querySelector('#box');
                 const countdownNode = document.querySelector(".time")
                 const countdownNodeNum = document.querySelector(".time div")
-                play = new Play(node, data, 100, countdownNode, countdownNodeNum)
+                play = new Play(node, data, 100, countdownNode, countdownNodeNum, 10, 15)
                 // setTimeout(()=>{
                 //     play.start();
                 // }, 500);
@@ -545,7 +545,14 @@
         //     
         // }
         function doit(data) {
-            const newData = data.map(item=>({name: item.name, phone: item.phone}))
+            const newData = data.map((item, index)=>{
+                if(index === 0) {
+                    return {level: '一等奖', name: item.name, phone: item.phone}
+                } else if(index > 0 && index < 4) {
+                    return {level: '二等奖', name: item.name, phone: item.phone}
+                }
+                return {level: '三等奖', name: item.name, phone: item.phone}
+            })
             /* 创建worksheet */
             var ws = XLSX.utils.json_to_sheet(newData);
 
